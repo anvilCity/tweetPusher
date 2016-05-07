@@ -1,4 +1,6 @@
 const _elasticSearchUrl = '?';
+const _timePeriod = 10; // minutes
+
 
 const _elasticSearch = require('elasticsearch');
 const _elasticSearchClient = new _elasticSearch.Client( { host: _elasticSearchUrl } );
@@ -31,7 +33,7 @@ const _deleteOldData = function( callback )
 {
 	var dateThreshold = new Date();
 
-	dateThreshold.setMinutes( dateThreshold.getMinutes() - 10 );
+	dateThreshold.setMinutes( dateThreshold.getMinutes() - _timePeriod );
 
 	_elasticSearchClient.delete({
 		index : 'tweets',
@@ -54,7 +56,6 @@ const _deleteOldData = function( callback )
 
 exports.pushUpdate = function()
 {
-	
 	_deleteOldData(function()
 	{
 		_getData(function( error, result )
@@ -64,5 +65,4 @@ exports.pushUpdate = function()
 			_pusher.trigger('entities', 'update', { message: "hello world" });
 		});		
 	});
-
 };
