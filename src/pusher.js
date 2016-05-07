@@ -36,6 +36,13 @@ const _getData = function( callback )
 					}
 				}
 			},
+			"filter" :
+			{
+				"term" :
+				{
+					"sentimentScore" : 0
+				}
+			},
 			"size": 0
 		}
 	}, callback);
