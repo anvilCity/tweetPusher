@@ -1,4 +1,4 @@
-const _elasticSearchUrl = '?';
+const _elasticSearchUrl = 'elastic:9200';
 const _timePeriod = 10; // minutes
 
 
@@ -80,18 +80,18 @@ exports.pushUpdate = function()
 		_getData(function( error, result )
 		{			
 			var pusherData = result.aggregations.pusherData.buckets;
+			console.log(pusherData);
 
 			for(var index in pusherData)
 			{
-				pusherData.avgSentiment = pusherData.avgSentiment.value;				
-				delete pusherData.avgSentiment.value;
+				pusherData[index].avgSentiment = pusherData[index].avgSentiment.value;				
+				delete pusherData[index].avgSentiment.value;
 
-				pusherData.avgSentiment = (pusherData.avgSentiment + 5)/10;
+				pusherData[index].avgSentiment = (pusherData[index].avgSentiment + 5)/10;
 
-				pusherData.value = pusherData.doc_count;
-				delete pusherData.doc_count;
+				pusherData[index].value = pusherData[index].doc_count;
+				delete pusherData[index].doc_count;
 			}
-
 			_pusher.trigger( 'entities', 'update', pusherData );
 		});		
 	});
