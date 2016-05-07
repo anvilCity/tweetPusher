@@ -1,0 +1,24 @@
+{
+  "name": "tweetpusher",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anvilCity/tweetPusher.git"
+  },
+  "author": "James Frost <hello@jamesfrost.me> (http://jamesfrost.me/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anvilCity/tweetPusher/issues"
+  },
+  "homepage": "https://github.com/anvilCity/tweetPusher#readme",
+  "dependencies": {
+    "elasticsearch": "^11.0.1",
+    "pusher": "^1.2.1"
+  }
+}
