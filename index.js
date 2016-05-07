@@ -1,3 +1,4 @@
 const _pusher = require('./src/pusher.js');
+const updateInterval = 10; // seconds
 
-_pusher.pushUpdate();
+setInterval( _pusher.pushUpdate, updateInterval*1000 );

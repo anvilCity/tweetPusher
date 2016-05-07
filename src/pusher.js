@@ -29,7 +29,27 @@ const _getData = function( callback )
 
 const _deleteOldData = function( callback )
 {
+	var dateThreshold = new Date();
 
+	dateThreshold.setMinutes( dateThreshold.getMinutes() - 10 );
+
+	_elasticSearchClient.delete({
+		index : 'tweets',
+		type :'tweet',
+		body : 
+		{
+			query :
+			{
+				range :
+				{
+					dateSaved :
+					{
+						lte : dateThreshold.getTime()
+					}
+				}
+			}
+		}
+	}, callback);
 };
 
 exports.pushUpdate = function()
@@ -39,6 +59,8 @@ exports.pushUpdate = function()
 	{
 		_getData(function( error, result )
 		{			
+			// TODO: process and return result
+
 			_pusher.trigger('entities', 'update', { message: "hello world" });
 		});		
 	});
