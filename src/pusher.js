@@ -74,6 +74,17 @@ exports.pushUpdate = function()
 		{			
 			var pusherData = result.aggregations.pusherData.buckets;
 
+			for(var index in pusherData)
+			{
+				pusherData.avgSentiment = pusherData.avgSentiment.value;				
+				delete pusherData.avgSentiment.value;
+
+				pusherData.avgSentiment = (pusherData.avgSentiment + 5)/10;
+
+				pusherData.value = pusherData.doc_count;
+				delete pusherData.doc_count;
+			}
+
 			_pusher.trigger( 'entities', 'update', pusherData );
 		});		
 	});
