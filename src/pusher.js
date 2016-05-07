@@ -1,4 +1,4 @@
-const _elasticSearchUrl = '?';
+const _elasticSearchUrl = 'elastic:9200';
 const _timePeriod = 10; // minutes
 
 
@@ -73,7 +73,7 @@ exports.pushUpdate = function()
 		_getData(function( error, result )
 		{			
 			var pusherData = result.aggregations.pusherData.buckets;
-
+			console.log(pusherData);
 			_pusher.trigger( 'entities', 'update', pusherData );
 		});		
 	});
