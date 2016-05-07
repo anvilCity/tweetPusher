@@ -21,10 +21,22 @@ const _getData = function( callback )
 		type :'tweet',
 		body : 
 		{
-			query :
-			{
-				match_all : {}
-			}
+			"aggs": {
+				"pusherData": {
+					"terms": {
+						"field": "entities",
+						"size": 25
+					},
+					"aggs": {
+						"avgSentiment": {
+							"avg": {
+								"field": "sentimentScore"
+							}
+						}
+					}
+				}
+			},
+			"size": 0
 		}
 	}, callback);
 };
@@ -60,9 +72,9 @@ exports.pushUpdate = function()
 	{
 		_getData(function( error, result )
 		{			
-			// TODO: process and return result
+			var pusherData = result.aggregations.pusherData.buckets;
 
-			_pusher.trigger('entities', 'update', { message: "hello world" });
+			_pusher.trigger( 'entities', 'update', pusherData );
 		});		
 	});
 };
