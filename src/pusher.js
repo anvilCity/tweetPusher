@@ -16,6 +16,11 @@ const _pusher = new Pusher({
 
 const _getData = function( callback )
 {
+
+	var dateThreshold = new Date();
+
+	dateThreshold.setMinutes( dateThreshold.getMinutes() - _timePeriod );
+
 	_elasticSearchClient.search({
 		index : 'tweets',
 		type :'tweet',
@@ -33,6 +38,16 @@ const _getData = function( callback )
 								"field": "sentimentScore"
 							}
 						}
+					}
+				}
+			},
+			"query": 
+			{
+				"range": 
+				{
+					"dateSaved": 
+					{
+						"gte" : dateThreshold.getTime()
 					}
 				}
 			},
